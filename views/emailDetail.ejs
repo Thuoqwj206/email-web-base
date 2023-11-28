@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= email.subject || '(no subject)' %></title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+
+      .email-detail {
+        width: 600px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .sender-info {
+        margin-bottom: 10px;
+      }
+
+      .sender-name {
+        color: #3498db;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .subject {
+        font-size: 24px;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .date {
+        color: #888;
+        font-size: 14px;
+      }
+
+      .email-content {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .attachment-link {
+        display: block;
+        color: #3498db;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-detail">
+      <div class="sender-info">
+        <% const senderFullName = email.sender_full_name || 'Unknown'; %>
+        <span class="sender-name">From: <%= senderFullName %></span>
+        <span class="date"
+          >Sent at: <%= new Date(email.sent_at).toLocaleString() %></span
+        >
+      </div>
+      <div class="subject"><%= email.subject || '(no subject)' %></div>
+      <div class="email-content"><%= email.body %></div>
+
+      <% if (email.attachment_path) { %>
+      <a class="attachment-link" href="/download/<%= email.attachment_path %>"
+        >Download Attachment</a
+      >
+      <% } %>
+    </div>
+  </body>
+</html>
